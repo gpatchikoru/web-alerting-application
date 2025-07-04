@@ -19,27 +19,28 @@ A comprehensive inventory management and alerting system for tracking medicine s
 ## 📸 Screenshots
 
 ### Login Page
-![Login Page](https://via.placeholder.com/800x500/1976d2/ffffff?text=Login+Page)
+<img width="1176" alt="Screenshot 2025-07-04 at 1 11 00 PM" src="https://github.com/user-attachments/assets/c526046d-9eed-43d5-9009-4a4cfe7f30d3" />
 *Clean login interface with demo credentials displayed*
 
 ### Dashboard
-![Dashboard](https://via.placeholder.com/800x500/4caf50/ffffff?text=Dashboard+Overview)
+<img width="1176" alt="Screenshot 2025-07-04 at 1 09 24 PM" src="https://github.com/user-attachments/assets/b0e6fc3a-c2a0-4188-8087-179ca53675d8" />
 *Comprehensive dashboard showing statistics and recent alerts*
 
 ### Inventory Management
-![Inventory](https://via.placeholder.com/800x500/ff9800/ffffff?text=Inventory+Management)
+<img width="1176" alt="Screenshot 2025-07-04 at 1 12 44 PM" src="https://github.com/user-attachments/assets/49bd001f-1801-484b-9ee6-dca9d9011b98" />
+
 *Inventory list with search and filter capabilities*
 
 ### Add Item Form
-![Add Item](https://via.placeholder.com/800x500/9c27b0/ffffff?text=Add+New+Item)
+<img width="1176" alt="Screenshot 2025-07-04 at 1 10 12 PM" src="https://github.com/user-attachments/assets/5b3ac63c-220d-433b-9a87-69a9089eddbb" />
 *Form for adding new inventory items with validation*
 
 ### Alerts Page
-![Alerts](https://via.placeholder.com/800x500/f44336/ffffff?text=Alerts+Management)
+<img width="1176" alt="Screenshot 2025-07-04 at 1 15 30 PM" src="https://github.com/user-attachments/assets/5e9791b2-19ba-46a4-982d-5c7dae32c816" />
 *Alert management with severity indicators*
 
 ### Settings Page
-![Settings](https://via.placeholder.com/800x500/607d8b/ffffff?text=Settings+Configuration)
+<img width="1176" alt="Screenshot 2025-07-04 at 1 13 02 PM" src="https://github.com/user-attachments/assets/922f4655-4956-44d0-a71d-fd8057767d4b" />
 *Application settings and user preferences*
 
 ## 🛠️ Technology Stack
