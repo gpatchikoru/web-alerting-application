@@ -1,5 +1,6 @@
 import { Kafka, Producer, Consumer } from 'kafkajs';
 import { logger } from '../utils/logger';
+import { KafkaEvent, InventoryEvent, AlertEvent } from '../types';
 
 class KafkaService {
   private kafka: Kafka;
@@ -60,7 +61,7 @@ class KafkaService {
           {
             key: message.id,
             value: JSON.stringify(message),
-            timestamp: Date.now()
+            timestamp: Date.now().toString()
           }
         ]
       });
@@ -73,7 +74,7 @@ class KafkaService {
 
   public async subscribeToTopic(
     topic: string, 
-    handler: (message: KafkaMessage) => Promise<void>
+    handler: (message: any) => Promise<void>
   ): Promise<void> {
     try {
       await this.consumer.subscribe({ topic, fromBeginning: false });
@@ -199,16 +200,7 @@ export async function createKafkaConsumer(): Promise<Consumer> {
     });
     
     await consumer.connect();
-    await consumer.subscribe({ 
-      topic: 'inventory-events', 
-      fromBeginning: false 
-    });
-    await consumer.subscribe({ 
-      topic: 'alert-events', 
-      fromBeginning: false 
-    });
-    
-    logger.info('Kafka consumer connected and subscribed successfully');
+    logger.info('Kafka consumer connected successfully');
     return consumer;
   } catch (error) {
     logger.error('Failed to create Kafka consumer:', error);
@@ -216,53 +208,57 @@ export async function createKafkaConsumer(): Promise<Consumer> {
   }
 }
 
-// Send inventory event
+// Send inventory event to Kafka
 export async function sendInventoryEvent(producer: Producer, event: any): Promise<void> {
   try {
     await producer.send({
-      topic: 'inventory-events',
-      messages: [{
-        key: event.id || 'inventory-event',
-        value: JSON.stringify(event)
-      }]
+      topic: process.env.KAFKA_TOPIC_INVENTORY_UPDATE || 'inventory-updates',
+      messages: [
+        {
+          key: event.id,
+          value: JSON.stringify(event)
+        }
+      ]
     });
-    logger.info('Inventory event sent to Kafka:', event.type);
+    logger.debug('Inventory event sent to Kafka', { eventId: event.id });
   } catch (error) {
     logger.error('Failed to send inventory event to Kafka:', error);
     throw error;
   }
 }
 
-// Send alert event
+// Send alert event to Kafka
 export async function sendAlertEvent(producer: Producer, event: any): Promise<void> {
   try {
     await producer.send({
-      topic: 'alert-events',
-      messages: [{
-        key: event.id || 'alert-event',
-        value: JSON.stringify(event)
-      }]
+      topic: process.env.KAFKA_TOPIC_ALERTS || 'alerts',
+      messages: [
+        {
+          key: event.id,
+          value: JSON.stringify(event)
+        }
+      ]
     });
-    logger.info('Alert event sent to Kafka:', event.type);
+    logger.debug('Alert event sent to Kafka', { eventId: event.id });
   } catch (error) {
     logger.error('Failed to send alert event to Kafka:', error);
     throw error;
   }
 }
 
-// Graceful shutdown for Kafka connections
+// Disconnect Kafka connections
 export async function disconnectKafka(producer?: Producer, consumer?: Consumer): Promise<void> {
   try {
     if (producer) {
       await producer.disconnect();
       logger.info('Kafka producer disconnected');
     }
-    
     if (consumer) {
       await consumer.disconnect();
       logger.info('Kafka consumer disconnected');
     }
   } catch (error) {
-    logger.error('Error disconnecting Kafka:', error);
+    logger.error('Failed to disconnect Kafka:', error);
+    throw error;
   }
 } 
