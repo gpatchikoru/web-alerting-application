@@ -12,17 +12,17 @@ RUN apk add --no-cache \
     g++
 
 # Copy shared-types and install/build
-COPY shared-types ./shared-types
+COPY ../shared-types ./shared-types
 WORKDIR /app/shared-types
 RUN npm ci && npm run build
 
 # Copy backend package files and install dependencies
 WORKDIR /app
-COPY backend/package*.json ./
+COPY package*.json ./
 RUN npm ci
 
 # Copy backend source code
-COPY backend/ .
+COPY . .
 
 # Build the backend application
 RUN npm run build
