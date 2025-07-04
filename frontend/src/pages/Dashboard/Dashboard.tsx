@@ -16,7 +16,7 @@ import {
   CheckCircle as CheckCircleIcon,
   Error as ErrorIcon
 } from '@mui/icons-material';
-import { inventoryApi, alertsApi } from '../../services/api';
+import { inventoryApi, alertsApi, Alert } from '../../services/api';
 
 interface DashboardStats {
   totalItems: number;
