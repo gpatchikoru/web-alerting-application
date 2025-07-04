@@ -2,7 +2,9 @@ import dotenv from 'dotenv';
 import { logger } from '../utils/logger';
 import { connectDatabase } from '../config/database';
 import { setupKafka } from '../config/kafka';
-import { AlertType, AlertSeverity, EventType, InventoryEvent } from '../../../shared-types/src';
+import { AlertType, AlertSeverity, EventType, InventoryEvent } from '../types';
+import { Kafka } from 'kafkajs';
+import { AlertService } from '../services/alertService';
 
 // Load environment variables
 dotenv.config();

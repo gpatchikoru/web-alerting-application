@@ -1,7 +1,8 @@
 import { Pool } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
 import { logger } from '../utils/logger';
-import { Alert, CreateAlertRequest, UpdateAlertRequest } from '../../../shared-types';
+import { Alert, CreateAlertRequest, UpdateAlertRequest } from '../types';
+import { db } from '../config/database';
 
 export class AlertService {
   private db: Pool;

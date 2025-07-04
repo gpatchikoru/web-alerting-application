@@ -1,7 +1,8 @@
 import { Pool } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
 import { logger } from '../utils/logger';
-import { InventoryItem, CreateInventoryItemRequest, UpdateInventoryItemRequest } from '../../../shared-types';
+import { InventoryItem, CreateInventoryItemRequest, UpdateInventoryItemRequest } from '../types';
+import { db } from '../config/database';
 
 export class InventoryService {
   private db: Pool;
