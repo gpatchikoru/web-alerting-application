@@ -20,7 +20,6 @@ import {
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { inventoryApi } from '../../services/api';
-import { InventoryItem } from '../../services/api';
 
 interface InventoryFormData {
   name: string;

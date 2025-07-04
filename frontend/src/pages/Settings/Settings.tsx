@@ -9,7 +9,6 @@ import {
   Button,
   Switch,
   FormControlLabel,
-  Divider,
   Alert,
   LinearProgress,
   Chip,
@@ -25,7 +24,6 @@ import {
   Save as SaveIcon,
   Refresh as RefreshIcon
 } from '@mui/icons-material';
-import { useWebSocket } from '../../context/WebSocketContext';
 
 interface SettingsData {
   // Alert Settings
@@ -50,7 +48,6 @@ interface SettingsData {
 }
 
 const Settings: React.FC = () => {
-  const { isConnected, subscribe, unsubscribe } = useWebSocket();
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -375,28 +372,6 @@ const Settings: React.FC = () => {
               <Typography variant="caption" color="textSecondary">
                 Web and email methods cannot be removed
               </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* WebSocket Status */}
-        <Grid item xs={12}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                System Status
-              </Typography>
-              
-              <Box display="flex" gap={2} alignItems="center">
-                <Chip
-                  label={isConnected ? 'Connected' : 'Disconnected'}
-                  color={isConnected ? 'success' : 'error'}
-                  variant="outlined"
-                />
-                <Typography variant="body2" color="textSecondary">
-                  WebSocket Status
-                </Typography>
-              </Box>
             </CardContent>
           </Card>
         </Grid>

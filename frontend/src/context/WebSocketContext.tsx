@@ -72,7 +72,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
         ws.close();
       }
     };
-  }, []);
+  }, [isConnected, subscriptions, ws]);
 
   const handleWebSocketMessage = (data: any) => {
     switch (data.type) {

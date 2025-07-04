@@ -9,7 +9,6 @@ import {
   Button,
   LinearProgress,
   Alert as MuiAlert,
-  Paper,
   IconButton,
   Dialog,
   DialogTitle,
