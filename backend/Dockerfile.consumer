@@ -1,0 +1,48 @@
+# Use Node.js 18 Alpine as base image
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apk add --no-cache \
+    curl \
+    python3 \
+    make \
+    g++
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production
+
+# Copy source code
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Create logs directory
+RUN mkdir -p logs
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nodejs -u 1001
+
+# Change ownership of the app directory
+RUN chown -R nodejs:nodejs /app
+USER nodejs
+
+# Create health check script
+RUN echo 'const http = require("http"); const options = { hostname: "localhost", port: 4001, path: "/health", timeout: 2000 }; const req = http.request(options, (res) => { process.exit(res.statusCode === 200 ? 0 : 1); }); req.on("error", () => process.exit(1)); req.on("timeout", () => process.exit(1)); req.end();' > dist/consumer/health-check.js
+
+# Expose port for health checks
+EXPOSE 4001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD node dist/consumer/health-check.js
+
+# Start the consumer service
+CMD ["node", "dist/consumer/index.js"] 
