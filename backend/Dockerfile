@@ -1,7 +1,7 @@
 # Use Node.js 18 Alpine as base image
 FROM node:18-alpine
 
-# Set working directory
+# Set working directory for the app
 WORKDIR /app
 
 # Install system dependencies
@@ -11,16 +11,20 @@ RUN apk add --no-cache \
     make \
     g++
 
-# Copy package files
-COPY package*.json ./
+# Copy shared-types and install/build
+COPY ../shared-types ./shared-types
+WORKDIR /app/shared-types
+RUN npm ci && npm run build
 
-# Install all dependencies (including dev)
+# Copy backend package files and install dependencies
+WORKDIR /app
+COPY package*.json ./
 RUN npm ci
 
-# Copy source code
+# Copy backend source code
 COPY . .
 
-# Build the application
+# Build the backend application
 RUN npm run build
 
 # Remove dev dependencies for production
